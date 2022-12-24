@@ -1,8 +1,9 @@
-use std::env;
 use std::collections::HashMap;
-
 mod cli;
+mod config;
 mod analyze;
+use anyhow::anyhow;
+use config::*;
 
 use cli::{Action::*, CommandLineArgs};
 use structopt::StructOpt;
@@ -13,15 +14,25 @@ use serde_json::{Value};
 extern crate log;
 use env_logger::{Builder, Env, Target};
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let CommandLineArgs {action} = CommandLineArgs::from_args();
+async fn main() -> anyhow::Result<(), Box<dyn std::error::Error>> {
+    let CommandLineArgs {
+            action,
+            config_file,
+    } = CommandLineArgs::from_args();
+
+    let config_file = config_file
+        .or_else(find_default_config_file)
+        .ok_or(anyhow!("Failed to read default config file"))?;
 
     match action {
         Analyze {
             url,
             verbosity
         } => {
-            let rapid_key = env::var("RAPID_KEY").unwrap();
+            // Get Config from config file
+            let config = config::read_config(&config_file);
+            let rapid_key = &config.rapid_key;
+
             let log_level = match verbosity {
                 0 => "error",
                 1 => "info",
