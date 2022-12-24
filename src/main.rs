@@ -51,7 +51,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                 .unwrap();
 
             let j: Value = serde_json::from_str(&resp)?;
-            println!("{}", j.to_string());
+            println!("{}", j);
         }
     };
     Ok(())
