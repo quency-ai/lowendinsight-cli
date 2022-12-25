@@ -11,6 +11,16 @@ pub enum Action {
         /// Adjust level of stdout, 0 is no output, max 2 (debug)
         #[structopt(short, long, default_value="1")]
         verbosity: u8,
+    },
+
+    /// Retreive LowEndInsight analysis with a UUID
+    GetAnalysis{
+        /// the UUID of the previously posted Analysis job
+        #[structopt()]
+        uuid: String,
+        /// Adjust level of stdout, 0 is no output, max 2 (debug)
+        #[structopt(short, long, default_value="1")]
+        verbosity: u8,
     }
 }
 
