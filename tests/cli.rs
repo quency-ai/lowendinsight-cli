@@ -29,6 +29,20 @@ fn test_default_configuration_content_error() -> Result<(), Box<dyn std::error::
 }
 
 #[test]
+fn test_default_configuration_key_error() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("lei")?;
+    cmd.arg("-c");
+    cmd.arg("tests/lei.content.toml");
+    cmd.arg("analyze");
+    cmd.arg("https://github.com/kitplummer/gbtestee");
+    cmd.assert()
+        //.failure()
+        .stdout(predicates::str::contains("rapid_key"));
+    Ok(())
+}
+
+
+#[test]
 fn test_basic_analysis_post() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("lei")?;
     cmd.arg("analyze");
