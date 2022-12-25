@@ -42,5 +42,7 @@ jobs:
         toolchain: stable
         default: true
         override: true
+    - name: setup config.toml
+      run : mkdir $HOME/.config/lei/ && echo "rapid_key=${{ secrets.RAPID_KEY }}" >> $HOME/.config/lei/config.toml
     - name: cargo test
       run: export TMPDIR=$HOME; cargo test --verbose

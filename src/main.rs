@@ -22,7 +22,7 @@ async fn main() -> anyhow::Result<(), Box<dyn std::error::Error>> {
 
     let config_file = config_file
         .or_else(find_default_config_file)
-        .ok_or(anyhow!("Failed to read default config file"))?;
+        .ok_or_else(|| anyhow!("Failed to read default config file"))?;
 
     match action {
         Analyze {
@@ -48,7 +48,7 @@ async fn main() -> anyhow::Result<(), Box<dyn std::error::Error>> {
             body.insert("urls", urls);
 
             let mut headers = HeaderMap::new();
-            headers.insert("X-RapidApi-Key", HeaderValue::from_str(&rapid_key).unwrap());
+            headers.insert("X-RapidApi-Key", HeaderValue::from_str(rapid_key).unwrap());
             headers.insert("X-RapidApi-Host", HeaderValue::from_str("lowendinsight2.p.rapidapi.com").unwrap());
             let client = reqwest::Client::new();
             let resp = client.post("https://lowendinsight2.p.rapidapi.com/analyze")
