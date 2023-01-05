@@ -10,6 +10,9 @@ use structopt::StructOpt;
 #[macro_use]
 extern crate log;
 
+#[macro_use]
+extern crate prettytable;
+
 #[tokio::main]
 async fn main() -> anyhow::Result<(), Box<dyn std::error::Error>> {
     let CommandLineArgs {

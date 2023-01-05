@@ -68,7 +68,7 @@ fn test_summary_report() -> Result<(), Box<dyn std::error::Error>> {
     cmd.arg("-s");
     cmd.arg("https://github.com/kitplummer/gbtestee");
     cmd.assert()
-        .stdout(predicates::str::contains("complete"));
+        .stdout(predicates::str::contains("functional contributor risk"));
     Ok(())
 }
 
