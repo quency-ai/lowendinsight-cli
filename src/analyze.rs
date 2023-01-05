@@ -8,7 +8,7 @@ use crate::config;
 
 use env_logger::{Builder, Env, Target};
 
-pub async fn analyze(config_file: PathBuf, url: String, verbosity: u8) -> Result<()> {
+pub async fn analyze(config_file: PathBuf, url: String, verbosity: u8, summary: bool) -> Result<()> {
   // Get Config from config file
   let config = config::read_config(&config_file);
   let rapid_key = &config.rapid_key;
@@ -46,7 +46,7 @@ pub async fn analyze(config_file: PathBuf, url: String, verbosity: u8) -> Result
   Ok(())
 }
 
-pub async fn get_analysis(config_file: PathBuf, uuid:String, verbosity: u8) -> Result<()> {
+pub async fn get_analysis(config_file: PathBuf, uuid:String, verbosity: u8, summary: bool) -> Result<()> {
   // Get Config from config file
   let config = config::read_config(&config_file);
   let rapid_key = &config.rapid_key;

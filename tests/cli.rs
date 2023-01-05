@@ -62,6 +62,17 @@ fn test_basic_analysis_get() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+fn test_summary_report() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("lei")?;
+    cmd.arg("analyze");
+    cmd.arg("-s");
+    cmd.arg("https://github.com/kitplummer/gbtestee");
+    cmd.assert()
+        .stdout(predicates::str::contains("complete"));
+    Ok(())
+}
+
+#[test]
 fn test_help() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("lei")?;
     cmd.arg("help");
