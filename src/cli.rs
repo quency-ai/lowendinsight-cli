@@ -11,6 +11,9 @@ pub enum Action {
         /// Adjust level of stdout, 0 is no output, max 2 (debug)
         #[structopt(short, long, default_value="1")]
         verbosity: u8,
+        /// Convert report response to simple summary table
+        #[structopt(short, long)]
+        summary: bool,
     },
 
     /// Retreive LowEndInsight analysis with a UUID
@@ -21,6 +24,9 @@ pub enum Action {
         /// Adjust level of stdout, 0 is no output, max 2 (debug)
         #[structopt(short, long, default_value="1")]
         verbosity: u8,
+        /// Convert report response to simple summary table
+        #[structopt(short, long)]
+        summary: bool,
     }
 }
 
