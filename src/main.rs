@@ -10,6 +10,9 @@ use structopt::StructOpt;
 #[macro_use]
 extern crate log;
 
+#[macro_use]
+extern crate prettytable;
+
 #[tokio::main]
 async fn main() -> anyhow::Result<(), Box<dyn std::error::Error>> {
     let CommandLineArgs {
@@ -22,8 +25,8 @@ async fn main() -> anyhow::Result<(), Box<dyn std::error::Error>> {
         .ok_or_else(|| anyhow!("Failed to read default config file"))?;
 
     match action {
-        Analyze { url, verbosity} => {
-            match analyze::analyze(config_file, url, verbosity).await {
+        Analyze { url, verbosity, summary} => {
+            match analyze::analyze(config_file, url, verbosity, summary).await {
                 Ok(res) => res,
                 Err(_) => {
                     println!("LEI Error: asynchronous problem doing analysis.");
@@ -31,8 +34,8 @@ async fn main() -> anyhow::Result<(), Box<dyn std::error::Error>> {
                 }
             }
         },
-        GetAnalysis { uuid, verbosity} => {
-            match analyze::get_analysis(config_file, uuid, verbosity).await {
+        GetAnalysis { uuid, verbosity, summary} => {
+            match analyze::get_analysis(config_file, uuid, verbosity, summary).await {
                 Ok(res) => res,
                 Err(_) => {
                     println!("LEI Error: asynchronous problem doing analysis.");
